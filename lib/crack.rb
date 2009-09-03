@@ -2,6 +2,6 @@ module Crack
   class ParseError < StandardError; end
 end
 
-require 'crack/core_extensions'
-require 'crack/json'
-require 'crack/xml'
+require File.dirname(__FILE__).to_s + '/crack/core_extensions'
+require File.dirname(__FILE__).to_s + '/crack/json'
+require File.dirname(__FILE__).to_s + '/crack/xml'
