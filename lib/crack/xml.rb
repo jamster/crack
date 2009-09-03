@@ -82,9 +82,11 @@ class REXMLUtilityNode #:nodoc:
 
     if @text
       t = typecast_value( unnormalize_xml_entities( inner_html ) )
-      t.class.send(:attr_accessor, :attributes)
-      t.attributes = attributes
-      return { name => t }
+      if attributes
+        return {name => {"value" => t, "attributes" => attributes}}
+      else
+        return {name => {"value" => t}}
+      end
     else
       #change repeating groups into an array
       groups = @children.inject({}) { |s,e| (s[e.name] ||= []) << e; s }
@@ -111,7 +113,7 @@ class REXMLUtilityNode #:nodoc:
           end
         end
         out.merge! attributes unless attributes.empty?
-        out = out.empty? ? nil : out
+        out = out.empty? ? nil : {"attributes" => out}
       end
 
       if @type && out.nil?
