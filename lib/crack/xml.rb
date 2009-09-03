@@ -82,10 +82,10 @@ class REXMLUtilityNode #:nodoc:
 
     if @text
       t = typecast_value( unnormalize_xml_entities( inner_html ) )
-      if attributes
+      if attributes && !attributes.empty?
         return {name => {"value" => t, "attributes" => attributes}}
       else
-        return {name => {"value" => t}}
+        return {name =>  t}
       end
     else
       #change repeating groups into an array
@@ -113,7 +113,7 @@ class REXMLUtilityNode #:nodoc:
           end
         end
         out.merge! attributes unless attributes.empty?
-        out = out.empty? ? nil : {"attributes" => out}
+        out = out.empty? ? nil : out
       end
 
       if @type && out.nil?
